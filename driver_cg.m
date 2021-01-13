@@ -26,8 +26,6 @@ initialise_adaptivity
 % Solving.
 solutionData.uh = solve_cg(problemData, meshData);
 
-meshData = refine(meshData, solutionData, adaptivityData);
-
 % Plot solution.
 trimesh(meshData.element_vertices, meshData.vertex_coordinates(:, 1), meshData.vertex_coordinates(:, 2), solutionData.uh);
 hold on
@@ -39,7 +37,7 @@ y = linspace(-1, 1, 50);
 Z = zeros(50);
 for i = 1:50
     for j = 1:50
-        Z(i, j) = problemData.u([x(i) y(j)]);
+        Z(i, j) = problemData.u([x(j) y(i)]);
     end
 end
 surf(X, Y, Z)

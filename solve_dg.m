@@ -3,8 +3,8 @@ function uh = solve_cg(problemData, meshData)
     [Dirichlet, Neumann, noNeumannSegments] = get_boundaryConditions(meshData);
     
     % Sets up stiffness matrix and load vector.
-    A = sparse(meshData.no_vertices, meshData.no_vertices);
-    b = zeros (meshData.no_vertices, 1);
+    A = sparse(3*meshData.no_elements, 3*meshData.no_elements);
+    b = zeros (3*meshData.no_elements, 1);
     
     % Gradient of basis functions.
     basis_ = [-1 -1; 1 0; 0 1]';
