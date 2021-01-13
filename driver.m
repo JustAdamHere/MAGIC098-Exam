@@ -26,7 +26,7 @@ initialise_adaptivity
 % Solving.
 solutionData.uh = solve_cg(problemData, meshData);
 
-meshData = refine_mesh(meshData, solutionData);
+meshData = refine(meshData, solutionData, adaptivityData);
 
 % Plot solution.
 trimesh(meshData.element_vertices, meshData.vertex_coordinates(:, 1), meshData.vertex_coordinates(:, 2), solutionData.uh);
