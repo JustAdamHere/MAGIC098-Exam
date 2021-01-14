@@ -9,7 +9,8 @@ function uh = solve_cg(problemData, meshData)
     % Gradient of basis functions.
     basis_ = [-1 -1; 1 0; 0 1]';
     
-    for element = 1:meshData.no_elements
+    % Element loop.
+    for element = 1:meshData.no_elements       
         % Get this element's vertices.
         vertices = meshData.element_vertices(element, :);
         
@@ -33,7 +34,7 @@ function uh = solve_cg(problemData, meshData)
         ];
         Binv = inv(B);
         element_area = abs(det(B))*0.5;
-         
+        
         % Creates local stiffness matrix.
         localA = ...
             problemData.a * basis_' * (Binv*Binv') * basis_ * element_area + ...
@@ -45,25 +46,13 @@ function uh = solve_cg(problemData, meshData)
             (f12+f23)/2; ...
             (f23+f31)/2 ...
             ] * element_area/3;
-         
-        A(vertices, vertices) = A(vertices, vertices) + localA;
-        b(vertices)           = b(vertices) + localb;
+    
+        A(element*(1:3), element*(1:3)) = A(element*(1:3), element*(1:3)) + localA;
+        b(element*(1:3))                = b(element*(1:3))                + localb;
     end
     
-    % Imposes boundary conditions.
-    if (Neumann ~= [])
-        for i = 1:noNeumannSegments
-            segment = Neumann(i, :);
-        end
-    end
-    
-    for i = 1:length(Dirichlet)
-        vertex = Dirichlet(i);
-        
-        A(vertex, :)      = zeros(1, meshData.no_vertices);
-        A(vertex, vertex) = 1;
-        b(vertex)         = problemData.gD(meshData.vertex_coordinates(vertex, :));
-    end
+    % Face loop.
+    for 
     
     % Solves linear system.
     uh = A \ b;
