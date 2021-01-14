@@ -3,7 +3,8 @@
 global problemData;
 
 % Directory for domain.
-problemData.domain = 'big-square-dirichlet';
+%problemData.domain = 'big-square-dirichlet';
+problemData.domain = 'L-shape-dirichlet';
 
 % Diffusion coefficient : a
 % Convection coefficient: b

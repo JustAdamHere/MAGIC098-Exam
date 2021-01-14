@@ -24,10 +24,10 @@ initialise_adaptivity
 %triplot(meshData.element_vertices, meshData.vertex_coordinates(:, 1), meshData.vertex_coordinates(:, 2));
 
 % Solving.
-solutionData.uh = solve_cg(problemData, meshData);
+solutionData.uh = solve_dg(problemData, meshData);
 
 % Plot solution.
-trimesh(meshData.element_vertices, meshData.vertex_coordinates(:, 1), meshData.vertex_coordinates(:, 2), solutionData.uh);
+trimesh_dg(meshData.element_vertices, meshData.vertex_coordinates(:, 1), meshData.vertex_coordinates(:, 2), solutionData.uh);
 hold on
 
 % Plot exact.

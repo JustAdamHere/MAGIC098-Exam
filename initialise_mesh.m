@@ -12,6 +12,8 @@ meshData.element_boundaries = load(['./meshes/' problemData.domain '/element_bou
 meshData.vertex_coordinates = load(['./meshes/' problemData.domain '/vertex_coordinates.txt']); 
 
 % Sets useful counters.
-meshData.no_elements = size(meshData.element_vertices,   1);
-meshData.no_vertices = size(meshData.vertex_coordinates, 1);
-meshData.no_faces    = numel(meshData.element_neighbours) - nnz(meshData.element_neighbours);
+meshData.no_elements      = size(meshData.element_vertices,   1);
+meshData.no_vertices      = size(meshData.vertex_coordinates, 1);
+meshData.no_externalFaces = numel(meshData.element_neighbours) - nnz(meshData.element_neighbours);
+meshData.no_internalFaces = nnz(meshData.element_neighbours)/2;
+meshData.no_faces         = meshData.no_externalFaces + meshData.no_internalFaces;

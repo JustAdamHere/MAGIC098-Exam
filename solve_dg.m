@@ -51,8 +51,50 @@ function uh = solve_cg(problemData, meshData)
         b(element*(1:3))                = b(element*(1:3))                + localb;
     end
     
+    % Calculate faces.
+    faces = zeros(meshData.no_internalFaces, 2);
+    faceCounter = 1;
+    for element = 1:meshData.no_elements
+        internalNeighbours = meshData.element_neighbours(element, meshData.element_neighbours(element, :) ~= 0);
+        
+        % Check to see if any of the neighbours have already been added, and discard these.
+        % COMBINE THE LOOPS BELOW!! It's removing before finishing its check.
+        for i = 1:size(faces, 1)
+            for j = 1:length(internalNeighbours)
+                if faces(i, 1) == internalNeighbours(j)
+                    internalNeighbours(j) = 0;
+                end
+            end 
+        end
+        
+        for i = 1:length(internalNeighbours)
+            if internalNeighbours ~= 0
+                faces(faceCounter, :) = [element, internalNeighbours(i)]; 
+                faceCounter = faceCounter + 1;
+            end
+        end
+    end
+    
+    % Calculate face vertices.
+    faceVertices = zeros(meshData.no_internalFaces, 2);
+    for face = 1:meshData.no_internalFaces
+        elements = faces(face, :);
+        
+        elementVertices = meshData.element_vertices(elements, :);
+        
+        faceVertices(face, :) = intersect(elementVertices(1, :), elementVertices(2, :));
+    end
+    
     % Face loop.
-    for 
+    for face = 1:meshData.no_internalFaces
+        elements = faces(face, :);
+        
+        faceCoordinates = meshData.vertex_coordinates(faceVertices(face, :), :);
+        
+        mid = faceCoordinates(1, :) + faceCoordinates(2, :);
+        
+        b1  = basis(1, 1, mid);
+    end
     
     % Solves linear system.
     uh = A \ b;
