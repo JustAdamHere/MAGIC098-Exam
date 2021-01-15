@@ -3,10 +3,12 @@ classdef class_element
         elementNo
         noNodes
         nodeCoordinates
+        neighbours
     end
     methods
         function obj = constructor(obj, elementNo, nodeCoordinates)
             obj.elementNo       = elementNo;
+            obj.noNodes         = 3;
             obj.nodecoordinates = nodeCoordinates;
         end
         function map = mapLocalToGlobal(obj, xi)
@@ -15,10 +17,14 @@ classdef class_element
         end
         function J = Jacobian(obj)
             c = obj.nodeCoordinates;
-            J = [
+%             J = [
+%                 c(2, 1)-c(1, 1)    0
+%                 0                  c(3, 2)-c(1, 2)
+%             ]/2;
+            J = det([
                 c(2, 1)-c(1, 1)    0
                 0                  c(3, 2)-c(1, 2)
-            ]/2;
+            ])/2;
         end
         function b = basis(~, n, i, xi)
             func0(:, :) = [-(xi(1)+xi(2))/2; (xi(1)+1)/2; (xi(2)+1)/2];
