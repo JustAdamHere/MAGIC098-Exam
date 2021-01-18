@@ -24,8 +24,8 @@ classdef class_mesh
             end
             
             % Construct faces.
-            e = edges(triangulation);
-            b = freeBoundary(triangulation);
+            e = sort(edges(triangulation), 2);
+            b = sort(freeBoundary(triangulation), 2);
             n = setdiff(e, b, 'rows');
             
             obj.noFaces         = length(e);
@@ -34,16 +34,18 @@ classdef class_mesh
             for i = 1:obj.noBoundaryFaces
                 obj.boundaryFaces{i}                 = class_face;
                 obj.boundaryFaces{i}.faceNo          = i;
-                points = triangulation.Points(b(i, :));
+                points = triangulation.Points(b(i, :), :);
                 obj.boundaryFaces{i}.nodeCoordinates = points;
-                % Which elements are its neighbours?
+                neighbours = edgeAttachments(triangulation, b(i, 1), b(i, 2));
+                obj.boundaryFaces{i}.neighbours      = neighbours{:};
             end
             for i = 1:obj.noInternalFaces
                 obj.internalFaces{i}                 = class_face;
                 obj.internalFaces{i}.faceNo          = i+obj.noBoundaryFaces;
-                points = triangulation.Points(n(i, :));
+                points = triangulation.Points(n(i, :), :);
                 obj.internalFaces{i}.nodeCoordinates = points;
-                % Which elements are its neighbours?
+                neighbours = edgeAttachments(triangulation, n(i, 1), n(i, 2));
+                obj.internalFaces{i}.neighbours      = neighbours{:};
             end
         end
     end
