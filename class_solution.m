@@ -100,6 +100,9 @@ classdef class_solution
                 DoFs1 = neighbours(1)*(1:3);
                 DoFs2 = neighbours(2)*(1:3);
                 
+                normal1 = meshData.elements{neighbours(1)}.nodeCoordinates(1, :) - (face.nodeCoordinates(1, :) + face.nodeCoordinates(2, :))/2;
+                normal2 = meshData.elements{neighbours(2)}.nodeCoordinates(1, :) - (face.nodeCoordinates(1, :) + face.nodeCoordinates(2, :))/2;
+                
                 for j = 1:length(DoFs1)
                     m = DoFs1(j);
                     
@@ -114,7 +117,7 @@ classdef class_solution
                         basis2  = @(xi) face.basis(k, 0, xi);
                         basis2_ = @(xi) face.basis(k, 1, xi);
                         
-                        A(n, m) = A(n, m) + obj.a_if(basis1, basis1_, basis2, basis2_, J, theta, sigma, points, weights);
+                        A(n, m) = A(n, m) + obj.a_if(basis1, basis1_, basis2, basis2_, normal1, normal2, J, theta, sigma, points, weights);
                     end
                 end
             end
@@ -157,14 +160,14 @@ classdef class_solution
             end
         end
         
-        function integral = a_if(~, b1, b1_, b2, b2_, J, theta, sigma, points, weights)
+        function integral = a_if(~, b1, b1_, b2, b2_, n1, n2, J, theta, sigma, points, weights)
             integral = 0;
             
             for i = 1:length(points)
                 p = points(i, :);
                 w = weights(i);
                 
-                integral = integral + 0;
+                %integral = integral + ()*w/J;
             end
         end
         
