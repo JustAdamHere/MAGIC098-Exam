@@ -167,7 +167,7 @@ classdef class_solution
                 p = points(i, :);
                 w = weights(i);
                 
-                %integral = integral + ()*w/J;
+                integral = integral + dot(b1_(p)+b2_(p), b1(p)*n1 + b2(p)*n2)*w/J;
             end
         end
         
