@@ -3,8 +3,8 @@
 BUILD_DIR ?= ./build
 SRC_DIRS ?= ./src
 TEST_DIRS ?= ./tests
-#TEST_FILE ?= quadrature_test_20210106
-TEST_FILE ?= dg_hp_boundary
+TEST_FILE ?= driver_linux
+#TEST_FILE ?= dg_hp_boundary
 #TEST_FILE ?= hg_boundary
 
 TARGET_EXEC ?= $(TEST_FILE).out
