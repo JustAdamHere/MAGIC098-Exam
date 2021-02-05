@@ -48,11 +48,16 @@
 					* As long as your favourite ODE takes a very, very specific form.
 					<br>
 					<br>
-					If you're unsure on what to do, then try some of these examples:
+					If you're unsure on what to do, then click to run some of these examples:
 					<ul>
 						<li><a href="https://fem.blakey.family/?f=one&epsilon=0.000001&c=one&N=20">Boundary layer</a></li>
-						<li><a href="https://fem.blakey.family/?f=pi2sin&epsilon=1&c=zero&N=10">Poisson</a></li>
+						<li><a href="https://fem.blakey.family/?f=pi2sin&epsilon=1&c=zero&N=10">Poisson, giving u(x) = sin(pi x)</a></li>
 					</ul>
+					<br>
+
+					Otherwise, fill in the details below:
+					<br>
+					<br>
 
 					<div class="wrap-input100 input100-select">
 					<span class="label-input100">Forcing function, f</span>

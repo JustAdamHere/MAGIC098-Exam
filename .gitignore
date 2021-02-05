@@ -3,9 +3,9 @@
 *.sublime-workspace
 *.exe
 *.mod
-*.png
-*.css
-*.html
+#*.png
+#*.css
+#*.html
 *.tex
 *.sty
 *.js
